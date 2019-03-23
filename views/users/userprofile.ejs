@@ -1,0 +1,13 @@
+<% include ../partials/head %>
+<form action="/notes" method="get">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label>Name: </label>
+      <input type="text" class="form-control-plaintext" readonly id="name" value="<%=user.name%>">
+      <label>Email:</label>
+      <input type="email" class="form-control-plaintext" readonly id="username" value="<%=user.username%>">
+    </div>
+  </div>  
+  <button type="submit" class="btn btn-primary">Back</button>
+</form>
+<% include ../partials/footer %>

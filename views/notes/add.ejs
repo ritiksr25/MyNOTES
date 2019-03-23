@@ -1,0 +1,17 @@
+<% include ../partials/head %>
+
+  <div class="container"> 
+<center>
+  <form class="form" action="/notes/add-note" method="post">
+  <h1 class="h3 mb-3 font-weight-normal">Add a Note</h1><br>    
+  <label for="title">Title: </label>
+  <input type="text" style="width:50%" name="title" class="form-control" placeholder="Note Title" required autofocus><br>
+  <label for="text">Details: </label>
+  <textarea style="width:50%" name="text" class="form-control" placeholder="Description..." required></textarea><br>
+  <button class="btn btn-lg btn-primary btn-block" style="width:50%"  type="submit">Submit</button>
+  </form>
+</center>
+  </div>
+</div>
+
+<% include ../partials/footer %>
