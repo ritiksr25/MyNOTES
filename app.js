@@ -66,8 +66,19 @@ mongoose.connect(dburl, {useNewUrlParser: true},(err,database)=>{
 });
 
 
+
+
+
+function logggedInAlready(req, res, next){
+    if(req.isAuthenticated()){
+       res.redirect('/notes');  
+    }
+    else
+       return next();
+    }
+
 //Index Route
-app.get("/", (req,res)=>{
+app.get("/", logggedInAlready, (req,res)=>{
 	res.render('users/welcome');
 });
 

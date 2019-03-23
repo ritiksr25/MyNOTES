@@ -8,13 +8,5 @@ module.exports = {
     res.redirect('/users/login');
   }
 }
-/* Problem
-module.exports ={
-	logggedInAlready(req,res,next){
-	if(!req.isAuthenticated()){
-		return next();
-	}
-	res.redirect("/notes");
-}
-}
-*/
+
+

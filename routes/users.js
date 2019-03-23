@@ -17,10 +17,16 @@ const { body,validationResult } = require('express-validator/check');
 
 
 
-
+function logggedInAlready(req, res, next){
+    if(req.isAuthenticated()){
+       res.redirect('/notes');  
+    }
+    else
+       return next();
+    }
 
 //Login Route
-router.get('/login',(req, res) => {
+router.get('/login',logggedInAlready, (req, res) => {
   res.render('users/login.ejs');
 });
 
@@ -46,7 +52,7 @@ router.get('/logout', (req, res) => {
 
 
 //Register Route
-router.get('/register',(req, res) => {
+router.get('/register',logggedInAlready, (req, res) => {
   res.render('users/register.ejs');
 });
 
@@ -64,10 +70,6 @@ var errors = req.validationErrors();
 if(req.body.password != req.body.password2){
     errors.push('Passwords do not match');
   }
-
-   if(errors){
-      res.render('users/register.ejs', {error: errors});
-  } 
    else{
   users.findOne({username: req.body.username}, (err, entry) => {
         if(err){
@@ -105,12 +107,6 @@ if(req.body.password != req.body.password2){
 }
 });
 
-
-
-
-
-
-          
         
 
 
