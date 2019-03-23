@@ -4,16 +4,8 @@ const mongoose = require("mongoose");
 const router = express.Router();
 
 
-//Check Authentication
-
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-      return next();
-    }
-    req.flash('error_msg', 'You must be Logged in...');
-    res.redirect('/users/login');
-  }
-
+//Import auth check function
+const {isLoggedIn}= require("../config/authcheck.js");
 
 
 //Import Model
