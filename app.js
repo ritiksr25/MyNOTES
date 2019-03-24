@@ -11,7 +11,6 @@ const bcrypt=require("bcryptjs");
 const expressValidator=require("express-validator");
 const session=require("express-session");
 const passport=require("passport");
-const dotenv=require("dotenv");
 
 
 //Import Routes
@@ -35,8 +34,6 @@ app.use(expressValidator());
 app.use(methodOverride('_method'));
 app.use(flash());
 
-dotenv.config();
-
 
 //Flash and user variables
 app.use((req, res, next)=>{
@@ -50,13 +47,14 @@ app.use((req, res, next)=>{
 
 //Import Configurations
 require('./config/passport')(passport);
+const db = require('./db');
 
 const{logggedInAlready}=require("./config/authcheck2");
 
 //Database Connection Definition
 mongoose.promise=global.promise;
 const dburl=process.env.dburl;
-mongoose.connect(dburl, {useNewUrlParser: true},(err,database)=>{
+mongoose.connect(db.mongoURI, {useMongoClient: true},(err,database)=>{
 	if(err) console.log("Error in Database Connectivity..."+err);
 	else{
         console.log("Database Connected Successfully...");

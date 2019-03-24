@@ -4,7 +4,9 @@
   "description": "A simple Application to add, update, delete and view Notes",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "web": "node app.js"
+
   },
   "repository": {
     "type": "git",
