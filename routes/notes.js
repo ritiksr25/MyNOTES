@@ -20,9 +20,18 @@ router.get('/', isLoggedIn, (req, res)=>{
 });
 
 
+//View Note
+router.get('/view-note/:id', isLoggedIn, (req, res) => {
+  Note.findOne({_id: req.params.id}).then(result => {
+    res.render("notes/view.ejs", {notes:result});
+  });
+});
+
+
+
 //Post request index -Search
 router.post('/', isLoggedIn, (req, res)=>{
-    Note.find({user:req.user.id, title:{$regex: req.body.title }}).sort({date:'desc'}).then(result => {
+    Note.find({user:req.user.id, title: {"$search": req.body.title}}).sort({date:'desc'}).then(result => {
       res.render('notes/dashboard.ejs', {notes:result});
    });
 });
@@ -47,7 +56,7 @@ router.post("/add-note", isLoggedIn,(req,res)=>{
             res.redirect('/notes/add-note');
         } 
         else{
-            Note.create({user: req.user.id ,title: req.body.title, text: req.body.text}, (err, done) => {
+            Note.create({user: req.user.id ,title: req.body.title, text: req.body.text, date: Date.now()}, (err, done) => {
             if(err){
         	    req.flash('error_msg', 'Invalid data');
                 res.redirect('/notes/add-note');
@@ -85,6 +94,7 @@ router.put('/edit-note/:id', isLoggedIn, (req, res) => {
   Note.findOne({_id: req.params.id}).then(result => {
     result.title = req.body.title;
     result.text = req.body.text;
+    result.date = Date.now();
     result.save().then(result => {
         req.flash('success_msg', 'Note updated Successfully');
         res.redirect('/notes');

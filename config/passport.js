@@ -10,7 +10,7 @@ const User = mongoose.model('users');
 //Definition -passport
 module.exports = (passport)=>{
   passport.use(new LocalStrategy({usernameField: 'username'}, (username, password, done) => {
-    User.findOne({username:username}).then(user => {
+    User.findOne({username:{ $regex: username, $options: 'i'  }}).then(user => {
       if(!user){
         return done(null, false, {message: 'User not Found'});
       } 

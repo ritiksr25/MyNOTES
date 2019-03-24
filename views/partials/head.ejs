@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/fontawesome.css" integrity="sha384-vd1e11sR28tEK9YANUtpIOdjGW14pS87bUBuOIoBILVWLFnS+MCX9T6MMf0VdPGq" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/solid.css" integrity="sha384-QokYePQSOwpBDuhlHOsX0ymF6R/vLk/UQVz3WHa6wygxI5oGTmDTv8wahFOSspdm" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=B612" rel="stylesheet">
-<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../styles.css">
 
 </head>
 <body>
@@ -20,7 +20,7 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
      <% if(user){ %>
       <div class="navbar-nav">
-      <a class="nav-item nav-link" href="/about">Home</a>
+      <a class="nav-item nav-link" href="/about">About</a>
       <a class="nav-item nav-link" href="/notes">Dashboard</a>
       <a class="nav-item nav-link" href="/notes/add-note">Add a Note<span class="sr-only">(current)</span></a>
       <form class="form-inline my-2 my-lg-0" action="/notes" method="post">
@@ -55,7 +55,11 @@
 <%}if(error_msg !=''){%>
   <div class="alert alert-danger"><%=error_msg%></div>
 <%}if(error!=''){%>
-  <div class="alert alert-danger"><%=error%></div>
+  <div class="alert alert-danger">
+      <%error.forEach(error=>{ %>
+      <%=error.msg%><br>
+    <%});%>
+  </div>
 <%}%>
 <br>
 <br>

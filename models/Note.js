@@ -6,7 +6,7 @@ const NotesSchema =mongoose.Schema({
 	user:String,
 	date: {
     	type: Date,
-    	default: Date.now
+    	default: Date.now()
     },
 });
 

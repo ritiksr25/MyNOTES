@@ -13,17 +13,12 @@ const users = mongoose.model('users');
 
 //Import functions
 const {isLoggedIn}= require("../config/authcheck.js");
+const {logggedInAlready}=require("../config/authcheck2.js");
 const { body,validationResult } = require('express-validator/check');
 
 
 
-function logggedInAlready(req, res, next){
-    if(req.isAuthenticated()){
-       res.redirect('/notes');  
-    }
-    else
-       return next();
-    }
+
 
 //Login Route
 router.get('/login',logggedInAlready, (req, res) => {
@@ -61,14 +56,22 @@ router.get('/register',logggedInAlready, (req, res) => {
 router.post('/register', (req, res) => {
 let username = req.body.username;
 let password = req.body.password;
+let password2 = req.body.password2;
 req.checkBody('username', 'Invalid Email...').notEmpty().isEmail();
 req.checkBody('password', 'Password length should be between 5 and 20').notEmpty().len(5, 20);
 
 //errors are as object, need to be in string
 
 var errors = req.validationErrors();
-if(req.body.password != req.body.password2){
-    errors.push('Passwords do not match');
+
+if(password!=password2){
+  req.flash("error_msg", "Confirm password not matched...");
+  res.redirect("/users/Register");
+}
+else
+  
+if(errors){
+    res.render("users/register", {error:errors});
   }
    else{
   users.findOne({username: req.body.username}, (err, entry) => {
@@ -86,7 +89,7 @@ if(req.body.password != req.body.password2){
               if(err) console.log(err);
               req.body.password = hash;
               users.create({
-                name: req.body.name,
+                name: req.body.name.toUpperCase(),
                 username: req.body.username,
                 password: req.body.password
             }, (err, done) => {

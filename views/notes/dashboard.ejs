@@ -9,10 +9,7 @@
 for(var i=0; i<notes.length; i++) { %>
   <div class="card card-body mb-2" style= "bottom:2px;">
     
-    <h3><%=i+1%><%=". "%><%=notes[i].title%></h3>
-    <h4><%=notes[i].text%></h4>
-    <a href="/notes/edit-note/<%= notes[i]._id %>" class="btn btn-primary" title="Edit">Edit</a><br>
-    <a href="/notes/delete-note/<%= notes[i]._id %>" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-secondary" title="Delete">Delete</a>
+    <h3><%=i+1%><%=". "%><a href="/notes/view-note/<%= notes[i]._id%>"><%= notes[i].title%></a></h3>
   </div>
 <%} else {%>  
 <div class="card card-body mb-2">
