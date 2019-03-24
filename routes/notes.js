@@ -30,8 +30,11 @@ router.get('/view-note/:id', isLoggedIn, (req, res) => {
 
 
 //Post request index -Search
+
+// not working
+
 router.post('/', isLoggedIn, (req, res)=>{
-    Note.find({user:req.user.id, title: {"$search": req.body.title}}).sort({date:'desc'}).then(result => {
+    Note.find({user:req.user.id, title: /req.body.title/}).sort({date:'desc'}).then(result => {
       res.render('notes/dashboard.ejs', {notes:result});
    });
 });
