@@ -39,7 +39,7 @@ dotenv.config();
 
 
 //Flash and user variables
-app.use(function(req, res, next){
+app.use((req, res, next)=>{
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
@@ -51,10 +51,9 @@ app.use(function(req, res, next){
 //Import Configurations
 require('./config/passport')(passport);
 
-
+const{logggedInAlready}=require("./config/authcheck2");
 
 //Database Connection Definition
-
 mongoose.promise=global.promise;
 const dburl=process.env.dburl;
 mongoose.connect(dburl, {useNewUrlParser: true},(err,database)=>{
@@ -68,14 +67,6 @@ mongoose.connect(dburl, {useNewUrlParser: true},(err,database)=>{
 
 
 
-
-function logggedInAlready(req, res, next){
-    if(req.isAuthenticated()){
-       res.redirect('/notes');  
-    }
-    else
-       return next();
-    }
 
 //Index Route
 app.get("/", logggedInAlready, (req,res)=>{
@@ -96,5 +87,5 @@ app.use('/notes', note);
 
 
 //Starting Server
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server started on Port ${PORT}`)); 
