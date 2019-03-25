@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "web": "node app.js",
-    "web": "npm start"
+    "web": "npm start app.js"
 
   },
   "repository": {
