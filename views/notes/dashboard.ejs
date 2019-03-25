@@ -1,7 +1,7 @@
 
 <% include ../partials/head %>
 
-<div class="card mx-auto" style="width:500px;">
+<div class="card mx-auto">
 <h2 class="card-header"><%=user.name%>'s Notes <a href="/notes/add-note"><span class="fas fa-plus-square" style="font-size: 1em;"></span></a></h2>
 <%if(notes.length!=0) 
 for(var i=0; i<notes.length; i++) { %>
