@@ -53,7 +53,7 @@ const db = require('./config/db');
 
 //Database Connection Definition
 mongoose.promise=global.promise;
-const dburl=process.env.dburl || db.mongoURI;
+const dburl=process.env.dburl || require('./config/db').mongoURI;
 mongoose.connect(dburl,{useNewUrlParser: true}, (err,database)=>{
 	if(err) console.log("Error in Database Connectivity..."+err);
 	else{
