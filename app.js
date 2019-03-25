@@ -49,11 +49,12 @@ app.use((req, res, next)=>{
 require('./config/passport')(passport);
 
 const{logggedInAlready}=require("./config/authcheck2");
+const db = require('./config/db');
 
 //Database Connection Definition
 mongoose.promise=global.promise;
-const dburl=process.env.dburl;
-mongoose.connect(dburl.mongoURI, {useMongoClient: true}, (err,database)=>{
+const dburl=process.env.dburl || db.mongoURI;
+mongoose.connect(dburl,{useNewUrlParser: true}, (err,database)=>{
 	if(err) console.log("Error in Database Connectivity..."+err);
 	else{
         console.log("Database Connected Successfully...");
