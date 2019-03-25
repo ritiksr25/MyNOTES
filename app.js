@@ -49,7 +49,6 @@ app.use((req, res, next)=>{
 require('./config/passport')(passport);
 
 const{logggedInAlready}=require("./config/authcheck2");
-const db = require('./config/db');
 
 //Database Connection Definition
 mongoose.promise=global.promise;
