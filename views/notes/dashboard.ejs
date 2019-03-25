@@ -1,26 +1,22 @@
+
 <% include ../partials/head %>
 
-  <div class="card-body">
-    <h5 class="card-title">Welcome, <%=user.name%></h5><br>
-    <!--<h5 class="card-title">Email: <%=user.username%></h5><br>--> 
-  </div>
-<div class="container" style= "background: gray;">
+<div class="card mx-auto" style="width:500px;">
+<h2 class="card-header"><%=user.name%>'s Notes <a href="/notes/add-note"><span class="fas fa-plus-square" style="font-size: 1em;"></span></a></h2>
 <%if(notes.length!=0) 
 for(var i=0; i<notes.length; i++) { %>
-  <div class="card card-body mb-2" style= "bottom:2px;">
-    
-    <h3><%=i+1%><%=". "%><a href="/notes/view-note/<%= notes[i]._id%>"><%= notes[i].title%></a></h3>
+  <div class="card-body">
+    <h3 class="card-title">
+      <%=i+1%><%=". "%><a href="/notes/view-note/<%= notes[i]._id%>"><%= notes[i].title%></a>
+    </h3>
   </div>
-<%} else {%>  
-<div class="card card-body mb-2">
-<h4>No Notes Found</h4>
-<a href="/notes/add-note" class="btn btn-primary" title="add">Add a Note</a><br>
-</div> 
+  <div class="card-footer text-muted"></div>
+<%} else {%>
+  <div class="card-body">
+    <h3 class="card-title">No Notes Listed</h3>
+     <a href="/notes/add-note" class="btn btn-primary" title="add">Add a Note</a><br>
+  </div> 
 <%}%>
 </div>
-<div class="container" style="left:80%; width: 10px;">
-	<a href="/notes/add-note"><span class="fas fa-plus-square" style="font-size: 5em;"></span></a></li>
-</div>
-<br>
-<% include ../partials/footer %>
 
+<% include ../partials/footer %>

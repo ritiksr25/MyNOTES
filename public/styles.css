@@ -1,10 +1,6 @@
 body{
     /*background-image: url("../images/bgimg.jpg");*/
     background-color: #e1e6ef;
-    min-height: 900px;
-    background-position: center;
-    background-repeat: repeat;
-    background-size: cover;
 }
 
 body, html{
@@ -12,28 +8,6 @@ body, html{
 }
 
 
-.form{
-    right: 25%;
-    left: 25%;
-    top: 25%,
-    width: 500px;
-    margin: 0 auto;
-    padding: 0px;
-    background-color: white;
-    float: center;
-  }
-.container {
-  position: absolute;
-  right: 25%;
-  left: 25%;
-  top: 25%;
-   width: 500px;
-  margin: 0 auto;
-  /*max-width: 300px;*/
-  padding: 0px;
-  background-color: white;
-  float: center;
-}
 .footer {
   position: fixed;
   left: 0;

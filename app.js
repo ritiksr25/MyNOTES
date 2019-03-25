@@ -54,15 +54,13 @@ const{logggedInAlready}=require("./config/authcheck2");
 //Database Connection Definition
 mongoose.promise=global.promise;
 const dburl=process.env.dburl;
-mongoose.connect(db.mongoURI, {useMongoClient: true},(err,database)=>{
+mongoose.connect(db.mongoURI, {useNewUrlParser: true}, (err,database)=>{
 	if(err) console.log("Error in Database Connectivity..."+err);
 	else{
         console.log("Database Connected Successfully...");
-        db=database;
+
     } 
 });
-
-
 
 
 

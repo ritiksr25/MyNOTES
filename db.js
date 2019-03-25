@@ -1,1 +1,0 @@
-module.exports = {mongoURI: 'mongodb+srv://ritiksr25:adminritiksr25@cluster0-ubx33.mongodb.net/MYNOTES?retryWrites=true'}

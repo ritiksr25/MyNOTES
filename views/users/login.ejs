@@ -1,19 +1,23 @@
 <% include ../partials/head %>
 
-  <div class="container"> 
-<center>
-  <form class="form" action="/users/login" method="post">
-  <h1 class="h3 mb-3 font-weight-normal">Log In</h1><br>    
-  <input type="email" style="width:50%" name="username" class="form-control" placeholder="Email ID" required autofocus><br>
-  <input type="password" style="width:50%" name="password" class="form-control" placeholder="Password" required><br>
-  <button class="btn btn-lg btn-primary btn-block" style="width:50%"  type="submit">Submit</button>
+<div class="card mx-auto" style="width:400px;">
+<h2 class="card-header">Login </h2>
+  <div class="card-body">
+    <h3 class="card-title">
+  <form class="form" action="/users/login" method="post">   
+  <input type="email" name="username" class="form-control" placeholder="Email ID" required autofocus><br>
+  <input type="password" name="password" class="form-control" placeholder="Password" required autofocus><br>
+  <button class="btn btn-primary" type="submit">Submit</button>
+  <a href="/" class="btn btn-secondary" title="Return">Return</a>
   </form>
-</center>
+    </h3>
+    <p class="card-text">Don't have an account? <a href="/users/register">Register</a></p>
   </div>
 </div>
 
-
 <% include ../partials/footer %>
+
+
 
 
 

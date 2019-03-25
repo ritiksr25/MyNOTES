@@ -60,8 +60,6 @@ let password2 = req.body.password2;
 req.checkBody('username', 'Invalid Email...').notEmpty().isEmail();
 req.checkBody('password', 'Password length should be between 5 and 20').notEmpty().len(5, 20);
 
-//errors are as object, need to be in string
-
 var errors = req.validationErrors();
 
 if(password!=password2){
@@ -120,60 +118,47 @@ router.get("/change-password", isLoggedIn, (req,res)=>{
 
 //Change Password process
 router.post("/change-password", (req,res)=>{
-  
-let errors=[];
+let oldpassword = req.body.oldpassword;
+let newpassword=req.body.newpassword;
+let newpassword2 = req.body.newpassword2;
 
 users.findOne({_id:req.user.id}).then(user=> {
-     bcrypt.compare(req.body.oldpassword, user.password, (err, isMatch) => {
-        if(err) throw err;
-        if(isMatch){
-           if(req.body.newpassword != req.body.newpassword2){
-    errors.push('New Passwords do not match');
-  }
-else
-   if(req.body.newpassword.length < 5){
-    errors.push('New Password must be at least of 5 characters');
-  }
-
-  if(errors.length > 0){
-    res.render('users/change-password.ejs', {error: errors});
-  } 
-
-  else {
-  users.findOne({_id: req.user.id}, (err, entry) => {
-        if(err){
-          req.flash('error_msg', 'Oops! Something went wrong');
-            res.redirect('/users/change-password');
+    bcrypt.compare(oldpassword, user.password, (err, isMatch) => {
+      if(err) throw err;
+      if(isMatch){
+        req.checkBody('newpassword', 'Password length should be between 5 and 20').notEmpty().len(5, 20);
+        var errors = req.validationErrors();
+      if(newpassword!=newpassword2){
+      req.flash("error_msg", "Confirm new passwords not matched...");
+      res.redirect("/users/change-password");
       }
-        if(entry){
-          bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(req.body.newpassword, salt, (err, hash) => {
-              if(err) console.log(err);
-              req.body.newpassword = hash;
-              users.updateOne({_id: req.user.id, password: req.body.newpassword}, (err, done) => {
-            if(err){
-              req.flash('error_msg', 'Invalid data');
-                res.redirect('/users/change-password');
-          }
-            else{
-              req.flash('success_msg', 'Password Changed Successfully...');
-                res.redirect('/notes');
-           }
-            });
-                
-          });
+      else
+        if(errors)
+          res.render("users/change-password", {error:errors});
+      else{
+      users.findOne({_id: req.user.id}).then(result => {
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(req.body.newpassword, salt, (err, hash) => {
+            if(err) console.log(err);
+            req.body.newpassword = hash;
+            result.password = req.body.newpassword;
+            result.save().then(result => {
+            req.flash('success_msg', 'Password Changed Successfully.');
+            res.redirect('/notes');
+          })
         });
-      }
-  });
-}
-} else {
-          req.flash('error_msg', 'Old Password Not matched!!');
-                res.redirect('/users/change-password');
-        }
       });
+    });
+  }
+}
+else{
+  req.flash('error_msg', 'Old Password not matched.');
+  res.redirect('/users/change-password');
+}
+});
+});
 });
 
-});
 
 
 

@@ -12,14 +12,14 @@ module.exports = (passport)=>{
   passport.use(new LocalStrategy({usernameField: 'username'}, (username, password, done) => {
     User.findOne({username:{ $regex: username, $options: 'i'  }}).then(user => {
       if(!user){
-        return done(null, false, {message: 'User not Found'});
+        return done(null, false, {message: "Invalid user"});
       } 
      bcrypt.compare(password, user.password, (err, isMatch) => {
         if(err) throw err;
         if(isMatch){
            return done(null, user);
         } else {
-          return done(null, false, {message: 'Bad Credentials'});
+          return done(null, false, {message: "Bad Credentials"});
         }
       })
     })

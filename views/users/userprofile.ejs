@@ -1,13 +1,32 @@
 <% include ../partials/head %>
-<form action="/notes" method="get">
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label>Name: </label>
-      <input type="text" class="form-control-plaintext" readonly id="name" value="<%=user.name%>">
-      <label>Email:</label>
-      <input type="email" class="form-control-plaintext" readonly id="username" value="<%=user.username%>">
-    </div>
-  </div>  
-  <button type="submit" class="btn btn-primary">Back</button>
-</form>
+
+<div class="card mx-auto" style="width:800px;">
+<h2 class="card-header">User Profile </h2>
+  <div class="card-body">
+    <h3 class="card-title">
+  <form class="form">   
+  <label>Name: </label>
+  <input type="text" class="form-control-plaintext" readonly id="name" value="<%=user.name%>">
+  <label>Email:</label>
+  <input type="email" class="form-control-plaintext" readonly id="username" value="<%=user.username%>">
+  <a href="/notes" class="btn btn-primary" title="Return">Return</a>
+  </form>
+    </h3>
+  </div>
+</div>
+
 <% include ../partials/footer %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

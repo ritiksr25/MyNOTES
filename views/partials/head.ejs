@@ -9,60 +9,12 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/solid.css" integrity="sha384-QokYePQSOwpBDuhlHOsX0ymF6R/vLk/UQVz3WHa6wygxI5oGTmDTv8wahFOSspdm" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=B612" rel="stylesheet">
 <link rel="stylesheet" href="../styles.css">
-
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="#">MyNOTES</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-     <% if(user){ %>
-      <div class="navbar-nav">
-      <a class="nav-item nav-link" href="/about">About</a>
-      <a class="nav-item nav-link" href="/notes">Dashboard</a>
-      <a class="nav-item nav-link" href="/notes/add-note">Add a Note<span class="sr-only">(current)</span></a>
-      <!--<form class="form-inline my-2 my-lg-0" action="/notes" method="post">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search notes" name="title" aria-label="Search">
-    <button class="btn btn-dark" type="submit">Search</button>
-  </form>-->
-  <div class="btn-group open">
-  <a class="btn btn-primary" href="#"><span class="fas fa-user"> <%=user.name%></span></i></a>
-  <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-  </a>
-  <ul class="dropdown-menu">
-  <li><a href="/users/view-profile"><span class="fas fa-address-card"> View Profile</span></a></li>
-  <li><a href="/users/change-password"><span class="fas fa-lock"> Change Password</span></a></li>
-  <li><a href="/users/logout"><span class="fas fa-sign-out-alt"> Logout</span></a></li>
-  </ul>
-</div>
-    </div>
 
-     <% } else{ %>
-     <div class="navbar-nav">
-      <a class="nav-item nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="/about">About</a>
-      <a class="nav-item nav-link" href="/users/Register"><button type="button" class="btn btn-success">Register</button></a>
-      <a class="nav-item nav-link" href="/users/login"><button type="button" class="btn btn-danger">Login</button></a>
-      
-    </div>
-    <% }%>
-  </div>
-</nav>
-<%if(success_msg !=''){ %>
-  <div class="alert alert-success"><%=success_msg%></div>
-<%}if(error_msg !=''){%>
-  <div class="alert alert-danger"><%=error_msg%></div>
-<%}if(error!=''){%>
-  <div class="alert alert-danger">
-      <%error.forEach(error=>{ %>
-      <%=error.msg%><br>
-    <%});%>
-  </div>
-<%}%>
-<br>
-<br>
+<% include ./navbar %>
+<% include ./message %>
+<% include ./modal %>
 
 
 

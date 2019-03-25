@@ -1,0 +1,14 @@
+<%if(success_msg !=''){ %>
+  <div class="alert alert-success"><%=success_msg%></div>
+<%}if(error_msg !=''){%>
+  <div class="alert alert-danger">Some error occured <%=error_msg%></div>
+<%}if(error!=''){%>
+  <div class="alert alert-danger">
+      <%error.forEach(error=>{ 
+      if(error.msg=='')%>
+      <%=error%>
+      <%=error.msg%><br>
+    <%});%>
+  </div>
+<%}%>
+<br>
