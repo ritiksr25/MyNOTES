@@ -5,6 +5,8 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const router = express.Router();
 const expressValidator= require("express-validator");
+const sgMail = require('@sendgrid/mail');
+
 
 //Import Model
 require('../models/User');
@@ -12,16 +14,18 @@ const users = mongoose.model('users');
 
 
 //Import functions
-const {isLoggedIn}= require("../config/authcheck.js");
-const {logggedInAlready}=require("../config/authcheck2.js");
-const { body,validationResult } = require('express-validator/check');
+const authcheck= require("../config/authcheck.js");
+const {body,validationResult } = require('express-validator/check');
 
 
+//SGMail setup
+const sgmailapi=require("../config/confidential.js");
+sgMail.setApiKey(sgmailapi.SENDGRID_API_KEY);
 
 
 
 //Login Route
-router.get('/login',logggedInAlready, (req, res) => {
+router.get('/login',authcheck.logggedInAlready, (req, res) => {
   res.render('users/login.ejs');
 });
 
@@ -47,7 +51,7 @@ router.get('/logout', (req, res) => {
 
 
 //Register Route
-router.get('/register',logggedInAlready, (req, res) => {
+router.get('/register',authcheck.logggedInAlready, (req, res) => {
   res.render('users/register.ejs');
 });
 
@@ -96,6 +100,15 @@ if(errors){
                 res.redirect('/users/register');
           }
             else{
+const msg = { 
+  to: req.body.username,
+  from: 'noreply@mynotesapp.tk', 
+  subject: 'Registered on MyNOTES',
+  text: 'sometext',
+  html: `<strong>Hi ${req.body.name.toUpperCase()}, <br><br>Thanks for registering on the application MyNOTES. Please tell us about your experience in this 3 minute Feedback. <br>Your feedback will help us improve and create a better experience for you.<br><br>Please fill in the attached Google form with your precious feedback.<br>Link: https://goo.gl/forms/5RwiV1nG2NMJDjDP2<br><br>Regards<br>Team MyNOTES</strong>`,
+  };
+  sgMail.send(msg);
+
               req.flash('success_msg', 'Registered Successfully. You can login now');
                 res.redirect('/users/login');
            }
@@ -112,7 +125,7 @@ if(errors){
 
 
 //Change Password route
-router.get("/change-password", isLoggedIn, (req,res)=>{
+router.get("/change-password", authcheck.isLoggedIn, (req,res)=>{
   res.render("users/change-password.ejs");
 })
 
@@ -132,6 +145,9 @@ users.findOne({_id:req.user.id}).then(user=> {
       req.flash("error_msg", "Confirm new passwords not matched...");
       res.redirect("/users/change-password");
       }
+      if(user.password==newpassword){
+        req.flash("error_msg", "New Password can't be old Password.");
+      }
       else
         if(errors)
           res.render("users/change-password", {error:errors});
@@ -143,6 +159,15 @@ users.findOne({_id:req.user.id}).then(user=> {
             req.body.newpassword = hash;
             result.password = req.body.newpassword;
             result.save().then(result => {
+  const msg = { 
+  to: req.user.username,
+  from: 'noreply@mynotesapp.tk', 
+  subject: 'Password Changed Successfully',
+  text: 'sometext',
+  html: `<strong>Hi ${req.user.name}, <br><br>Your Password for MyNOTES has been changed successfully. If you didnot initiated this change, please contact us at <a href = "mailto:support@mynotesapp.tk">support@mynotesapp.tk</a> <br><br>Regards<br>Team MyNOTES</strong>`,
+  };
+  sgMail.send(msg);
+
             req.flash('success_msg', 'Password Changed Successfully.');
             res.redirect('/notes');
           })
@@ -163,9 +188,11 @@ else{
 
 
 //View profile
-router.get("/view-profile",isLoggedIn, (req,res)=>{
+router.get("/view-profile",authcheck.isLoggedIn, (req,res)=>{
   res.render("users/userprofile.ejs");
 });
+
+
 
 //Export router
 module.exports = router;

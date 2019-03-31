@@ -11,6 +11,8 @@ const bcrypt=require("bcryptjs");
 const expressValidator=require("express-validator");
 const session=require("express-session");
 const passport=require("passport");
+const sgMail = require('@sendgrid/mail');
+
 
 
 //Import Routes
@@ -48,11 +50,21 @@ app.use((req, res, next)=>{
 //Import Configurations
 require('./config/passport')(passport);
 
-const{logggedInAlready}=require("./config/authcheck2");
+const authcheck=require("./config/authcheck");
+
+const confidential=require("./config/confidential");
+
+
+
+//SGMail setup
+sgMail.setApiKey(confidential.SENDGRID_API_KEY);
+
+
+
 
 //Database Connection Definition
 mongoose.promise=global.promise;
-const dburl=process.env.dburl || require('./config/db').mongoURI;
+const dburl=require('./config/confidential').mongoURI;
 mongoose.connect(dburl,{useNewUrlParser: true}, (err,database)=>{
 	if(err) console.log("Error in Database Connectivity..."+err);
 	else{
@@ -64,7 +76,7 @@ mongoose.connect(dburl,{useNewUrlParser: true}, (err,database)=>{
 
 
 //Index Route
-app.get("/", logggedInAlready, (req,res)=>{
+app.get("/", authcheck.logggedInAlready, (req,res)=>{
 	res.render('users/welcome');
 });
 
@@ -73,6 +85,38 @@ app.get("/", logggedInAlready, (req,res)=>{
 app.get("/about", (req,res)=>{
 	res.render("users/about.ejs");
 })
+
+
+
+//contact form
+app.get("/contact", (req,res)=>{
+  res.render("users/contact.ejs");
+})
+
+//Contact form Process
+app.post("/contact", (req,res)=>{
+const msg = { 
+  to: `${confidential.email}`,
+  from: 'noreply@mynotesapp.tk', 
+  subject: 'Contact Form ',
+  text: 'sometext',
+  html: `<strong>MyNOTES got a new contact form.<br><br>
+  Name: ${req.body.name}<br>
+  Email: ${req.body.email}<br>
+  Subject: ${req.body.subject}<br>
+  Message: ${req.body.message}
+  <br><br>Regards<br>Team MyNOTES</strong>`,
+  };
+  sgMail.send(msg);
+
+            req.flash('success_msg', 'Your message has been successfully submitted');
+            if(req.isAuthenticated())
+            res.redirect('/notes');
+            else
+            res.redirect('/');
+
+})
+
 
 
 //Using Routes

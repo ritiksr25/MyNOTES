@@ -4,11 +4,11 @@
 <h2 class="card-header">Update Note </h2>
   <div class="card-body">
     <h3 class="card-title">
-  <form class="form" action="/notes/edit-note/<%= notes._id%>?_method=PUT" method="post">    
+  <form class="form" action="/notes/edit-note/<%= notes._id%>" method="post">    
   <label for="title">Title: </label>
   <input type="text" name="title" class="form-control" placeholder="Note Title" value= "<%=notes.title%>" required autofocus><br>
   <label for="text">Details: </label>
-  <textarea name="text" class="form-control" placeholder="Description..." required><%=notes.text%></textarea><br>
+  <textarea name="text" class="form-control" placeholder="Description..." rows= 7 required><%=notes.text%></textarea><br>
   <button class="btn btn-primary" type="submit">Submit</button>
   <a href="/notes" class="btn btn-secondary" title="Return">Return</a>
   </form>

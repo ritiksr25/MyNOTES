@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const NotesSchema =mongoose.Schema({
-	title:String,
-	text: String,
-	user:String,
+	title: {iv:String, encryptedData: String},
+	text: {iv:String, encryptedData: String},
+	user: String,
 	date: {
     	type: Date,
     	default: Date.now()
