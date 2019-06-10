@@ -1,37 +1,44 @@
-//Import Modules
-const passport=require("passport");
-const LocalStrategy  = require('passport-local').Strategy;
+const passport = require('passport');
+const Strategy = require('passport-google-oauth20').Strategy;
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 
-//Import Model
-const User = mongoose.model('users');
+require('dotenv').config();
 
-//Definition -passport
-module.exports = (passport)=>{
-  passport.use(new LocalStrategy({usernameField: 'username'}, (username, password, done) => {
-    User.findOne({username:{ $regex: username, $options: 'i'  }}).then(user => {
-      if(!user){
-        return done(null, false, {message: "Invalid user"});
-      } 
-     bcrypt.compare(password, user.password, (err, isMatch) => {
-        if(err) throw err;
-        if(isMatch){
-           return done(null, user);
-        } else {
-          return done(null, false, {message: "Bad Credentials"});
-        }
-      })
+//load user schema
+const User = require('../models/User');
+
+module.exports = passport => {
+  passport.use(new Strategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: '/users/login/callback',
+    proxy: true
+  }, (accessToken, refreshToken, profile, done) => {
+    const newUser = {
+      googleID: profile.id,
+      name: profile.displayName,
+      email: profile.emails[0].value,
+      img: profile.photos[0].value
+    }
+    User.findOne({ googleID: newUser.googleID }).then(user => {
+      if (user) {
+        return done(null, user);
+      }
+      else {
+        User.create(newUser).then(user => {
+          return done(null, user);
+        })
+      }
     })
   }));
 
-  passport.serializeUser((user, done)=> {
-    done(null, user.id);
-  });
-  
-  passport.deserializeUser((id, done)=> {
-    User.findById(id, (err, user)=> {
-      done(err, user);
-    });
-  });
+  passport.serializeUser((user, done) => {
+    return done(null, user.id);
+  })
+
+  passport.deserializeUser((id, done) => {
+    User.findById(id, (err, user) => {
+      return done(err, user);
+    })
+  })
 }

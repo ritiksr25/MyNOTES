@@ -1,32 +1,20 @@
 <% include ../partials/head %>
 <div class="col-sm-6 mx-auto">
-<div class="card">
-<h2 class="card-header">User Profile </h2>
-  <div class="card-body">
-    <h5 class="card-title">
-  <form class="form">   
-  <label>Name: </label>
-  <input type="text" class="form-control-plaintext" readonly id="name" value="<%=user.name%>">
-  <label>Email:</label>
-  <input type="email" class="form-control-plaintext" readonly id="username" value="<%=user.username%>">
-  <a href="/notes" class="btn btn-primary" title="Return">Return</a>
-  </form>
-    </h5>
+  <div class="card">
+    <h2 class="card-header">User Profile </h2>
+    <div class="card-body">
+      <img src="<%=user.img%>" class="card-img-top" alt="user_img" style="height: 200px;width: 200px; border-radius: 50%;">
+
+      <h5 class="card-title">
+        <form class="form">
+          <label>Name: </label>
+          <input type="text" class="form-control-plaintext" readonly id="name" value="<%=user.name%>">
+          <label>Email:</label>
+          <input type="email" class="form-control-plaintext" readonly id="username" value="<%=user.email%>">
+          <a href="/notes" class="btn btn-primary" title="Return">Return</a>
+        </form>
+      </h5>
+    </div>
   </div>
 </div>
-</div>
 <% include ../partials/footer %>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

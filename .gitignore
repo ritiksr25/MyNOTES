@@ -1,2 +1,4 @@
 node_modules
-config/confidential.js
+.env
+package-lock.json
+

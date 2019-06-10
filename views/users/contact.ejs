@@ -7,7 +7,7 @@
   <form class="form" action="/contact" method="post">   
   <%if(user){%>
   <input type="text" class="form-control" name="name" value="<%=user.name%>"" required autofocus readonly><br>
-  <input type="text" class="form-control" name="email" value="<%=user.username%>" required autofocus readonly><br>
+  <input type="text" class="form-control" name="email" value="<%=user.email%>" required autofocus readonly><br>
   <% } else{ %>
   <input type="text" name="name" class="form-control" placeholder="Name" required autofocus><br>
   <input type="email" name="email" class="form-control" placeholder="Email ID" required autofocus><br>

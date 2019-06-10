@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="#"><span class="fas fa-sticky-note"></span>  MyNOTES</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <a class="navbar-brand" href="/"><span class="fas fa-sticky-note"></span> MyNOTES</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
@@ -14,20 +15,16 @@
         <a class="nav-link" href="/notes/add-note">Add Note</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/about">About</a>
-      </li>
-      <li class="nav-item active">
         <a class="nav-link" href="/contact">Contact Us</a>
       </li>
       <li class="nav-item active dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
           <span class="fas fa-user"></span> <%=user.name%>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="/users/view-profile"><span class="fas fa-address-card"> View Profile</span></a>
-          <a class="dropdown-item" href="/users/change-password"><span class="fas fa-lock"> Change Password</span></a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/users/logout"><span class="fas fa-sign-out-alt"> Logout</span></a>
+          <a class="dropdown-item" href="/users/logout"><span class="fab fa-google"> Logout</span></a>
         </div>
       </li>
     </ul>
@@ -41,19 +38,10 @@
         <a class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/about">About</a>
-      </li>
-      <li class="nav-item active">
         <a class="nav-link" href="/contact">Contact Us</a>
       </li>
-      <li class="nav-item active dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="fas fa-user"></span> Register/Login
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/users/register"><span class="fas fa-user-plus"> Register</span></a>
-          <a class="dropdown-item" href="/users/login"><span class="fas fa-sign-in-alt"> Login</span></a>
-        </div>
+      <li class="nav-item active">
+        <a class="nav-link" href="/users/login"><span class="fab fa-google"></span> Sign In</a>
       </li>
     </ul>
     <% }%>
