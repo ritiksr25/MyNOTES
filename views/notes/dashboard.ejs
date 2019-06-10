@@ -12,7 +12,7 @@ for(var i=0; i<notes.length; i++) { %>
   <div class="card">
     <div class="card-body">
       <h2 class="card-title"><%=notes[i].title.slice(0,100)%>...</h2>
-      <p class="card-text"><small class="text-muted">Last updated <%=notes[i].createdAt.toString().slice(0,25)%></small></p>
+      <p class="card-text"><small class="text-muted">Last updated <%=notes[i].createdAt.toString().slice(0,15)%></small></p>
       <a href="/notes/view-note/<%= notes[i]._id%>" class="card-link">See more...</a>
     </div>
   </div>
