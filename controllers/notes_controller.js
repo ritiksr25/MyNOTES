@@ -2,7 +2,7 @@ const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 module.exports.index = async (req, res) => {
-    let notes = await Note.find({ user: req.user.id }).sort({ date: 'desc' });
+    let notes = await Note.find({ user: req.user.id }).sort({ createdAt: 'desc' });
     res.render('notes/dashboard', { notes });
 }
 
@@ -12,7 +12,7 @@ module.exports.view = async (req, res) => {
 }
 
 module.exports.search = async (req, res) => {
-    let notes = await Note.find({ user: req.user.id }).sort({ date: 'desc' });
+    let notes = await Note.find({ user: req.user.id }).sort({ createdAt: 'desc' });
     res.render('notes/dashboard', { notes });
 }
 
