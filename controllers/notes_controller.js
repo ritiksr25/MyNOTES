@@ -29,7 +29,8 @@ module.exports.addProcess = async (req, res) => {
     let newNote = {
         title: req.body.title,
         text: req.body.text,
-        user: req.user._id
+        user: req.user._id,
+        createdAt: Date.now()
     }
     await Note.create(newNote);
     req.flash('success_msg', 'Note Added Successfully');
@@ -56,6 +57,7 @@ module.exports.updateProcess = async (req, res) => {
     let notes = await Note.findOne({ _id: req.params.id });
     notes.title = title;
     notes.text = text;
+    notes.createdAt = Date.now();
     await notes.save();
     req.flash('success_msg', 'Note updated Successfully');
     res.redirect('/notes');
